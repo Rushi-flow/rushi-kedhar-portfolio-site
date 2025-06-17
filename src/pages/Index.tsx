@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import { Mail, Phone, Linkedin, User, Zap, Rocket, FileText, Download, ExternalLink } from "lucide-react";
+import { Mail, Phone, Linkedin, User, Zap, Rocket, FileText, Download, ExternalLink, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -103,14 +102,14 @@ const Index = () => {
   );
 
   const renderHomeSection = () => (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-50">
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gray-50 px-4">
       <SciFiBackground />
       
-      {/* Hero Content */}
-      <div className="text-center z-10 px-4 max-w-7xl mx-auto">
-        {/* Profile Image - Centered and Large */}
-        <div className="mb-20 relative group">
-          <div className="relative w-80 h-80 mx-auto">
+      {/* Hero Content - Compact and Centered */}
+      <div className="text-center z-10 max-w-4xl mx-auto">
+        {/* Profile Image */}
+        <div className="mb-8 relative group">
+          <div className="relative w-48 h-48 mx-auto">
             <div className="w-full h-full rounded-full overflow-hidden border-4 border-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] transform-gpu transition-all duration-700 hover:scale-105 bg-white">
               <img 
                 src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
@@ -124,52 +123,73 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Name and Title - Huge Typography */}
-        <div className="mb-16">
-          <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-black mb-8 text-black leading-none tracking-tight">
-            RUSHI KEDHAR
+        {/* Name and Title */}
+        <div className="mb-6">
+          <h1 className="text-5xl md:text-6xl font-black mb-4 text-black leading-tight tracking-tight">
+            RUSHI KEDHAR KONDURU
           </h1>
-          <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-black mb-12 text-black leading-none tracking-tight">
-            KONDURU
-          </h1>
-          <div className="inline-block bg-black text-white px-12 py-6 rounded-full font-bold text-2xl md:text-3xl tracking-wide transform-gpu transition-all duration-300 hover:scale-105 hover:bg-red-500">
+          <div className="inline-block bg-black text-white px-8 py-3 rounded-full font-bold text-lg md:text-xl tracking-wide transform-gpu transition-all duration-300 hover:scale-105 hover:bg-red-500 mb-6">
             AI/ML ENGINEER | SOFTWARE DEVELOPER
           </div>
         </div>
 
-        {/* Description */}
-        <div className="mb-24 max-w-5xl mx-auto">
-          <SciFiCard delay={200}>
-            <CardContent className="p-12">
-              <p className="text-2xl md:text-3xl text-black leading-relaxed font-medium">
+        {/* Bio Summary */}
+        <div className="mb-8 max-w-3xl mx-auto">
+          <SciFiCard>
+            <CardContent className="p-8">
+              <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
                 Enthusiastic Computer Science professional with expertise in{" "}
-                <span className="font-black text-red-500">Artificial Intelligence</span>,{" "}
-                <span className="font-black text-red-500">Machine Learning</span>, and software development. 
+                <span className="font-bold text-red-500">Artificial Intelligence</span>,{" "}
+                <span className="font-bold text-red-500">Machine Learning</span>, and software development. 
                 Published research and delivered impactful projects, including AI-driven solutions for real-world challenges.
               </p>
             </CardContent>
           </SciFiCard>
         </div>
 
-        {/* Navigation Cards - Futuristic Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {navigationCards.map((card, index) => (
-            <SciFiCard 
-              key={card.id}
-              onClick={() => setActiveSection(card.id)}
-              delay={index * 100}
-            >
-              <CardContent className="p-12 text-center">
-                <div className="w-20 h-20 mx-auto mb-8 bg-black rounded-full flex items-center justify-center group-hover:bg-red-500 transition-colors duration-300">
-                  <card.icon className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-black font-black text-2xl md:text-3xl tracking-wide">
-                  {card.title.toUpperCase()}
-                </h3>
-              </CardContent>
-            </SciFiCard>
-          ))}
+        {/* Call-to-Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <Button 
+            onClick={() => setActiveSection("projects")}
+            className="bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg font-bold tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105"
+          >
+            VIEW PROJECTS
+          </Button>
+          <Button 
+            onClick={() => setActiveSection("contact")}
+            variant="outline"
+            className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-4 text-lg font-bold tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105"
+          >
+            CONTACT ME
+          </Button>
         </div>
+
+        {/* Scroll Down Indicator */}
+        <div className="flex flex-col items-center text-gray-500 animate-bounce">
+          <span className="text-sm font-medium mb-2 tracking-wide">EXPLORE MORE</span>
+          <ChevronDown className="w-6 h-6" />
+        </div>
+      </div>
+
+      {/* Navigation Cards - Below the fold */}
+      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl w-full px-4">
+        {navigationCards.map((card, index) => (
+          <SciFiCard 
+            key={card.id}
+            onClick={() => setActiveSection(card.id)}
+            delay={index * 100}
+            className="opacity-75 hover:opacity-100"
+          >
+            <CardContent className="p-6 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 bg-black rounded-full flex items-center justify-center group-hover:bg-red-500 transition-colors duration-300">
+                <card.icon className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-black font-bold text-sm tracking-wide">
+                {card.title.toUpperCase()}
+              </h3>
+            </CardContent>
+          </SciFiCard>
+        ))}
       </div>
     </div>
   );
@@ -395,13 +415,13 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 text-black relative overflow-x-hidden">
-      {/* Navigation Header - Futuristic Top Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-white/90 border-b border-gray-200">
-        <div className="max-w-8xl mx-auto px-8 py-6">
+      {/* Navigation Header - Sticky and Always Visible */}
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-white/95 border-b border-gray-200 shadow-lg">
+        <div className="max-w-8xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
             <button 
               onClick={() => setActiveSection("home")}
-              className="text-3xl font-black text-black hover:text-red-500 transition-all duration-300 tracking-wide"
+              className="text-2xl font-black text-black hover:text-red-500 transition-all duration-300 tracking-wide"
             >
               RUSHI KEDHAR
             </button>
@@ -411,7 +431,7 @@ const Index = () => {
                 <button
                   key={section}
                   onClick={() => setActiveSection(section)}
-                  className={`capitalize px-8 py-4 transition-all duration-300 font-black tracking-wide rounded-full ${
+                  className={`capitalize px-6 py-3 transition-all duration-300 font-bold tracking-wide rounded-full ${
                     activeSection === section 
                       ? "bg-red-500 text-white" 
                       : "text-black hover:text-red-500 hover:bg-gray-100"
@@ -426,7 +446,7 @@ const Index = () => {
       </nav>
 
       {/* Main Content */}
-      <main className="pt-24 relative">
+      <main className="pt-20 relative">
         <div 
           className="relative transition-all duration-1000 ease-out"
           style={{ 
