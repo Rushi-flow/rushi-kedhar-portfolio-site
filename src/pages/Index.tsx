@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Mail, Phone, Linkedin, User, Zap, Rocket, FileText, Download, ExternalLink, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -54,144 +53,152 @@ const Index = () => {
   // Animated Background Component
   const AnimatedBackground = () => (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Dark gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black" />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950" />
       
-      {/* Subtle grid pattern */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-30">
         <div className="h-full w-full" style={{
           backgroundImage: `
-            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+            linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px'
+          backgroundSize: '60px 60px'
         }} />
       </div>
       
-      {/* Floating particles */}
-      {[...Array(12)].map((_, i) => (
+      {[...Array(15)].map((_, i) => (
         <div
           key={i}
-          className="absolute rounded-full bg-white/20 animate-pulse"
+          className="absolute bg-blue-500/20 animate-pulse"
           style={{
-            width: `${3 + Math.random() * 6}px`,
-            height: `${3 + Math.random() * 6}px`,
+            width: `${4 + Math.random() * 8}px`,
+            height: `${4 + Math.random() * 8}px`,
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            transform: `translate(${mousePosition.x * (5 + i * 2)}px, ${mousePosition.y * (3 + i)}px)`,
-            animation: `pulse ${2 + i * 0.3}s infinite alternate`,
+            transform: `translate(${mousePosition.x * (8 + i * 3)}px, ${mousePosition.y * (5 + i * 2)}px)`,
+            animation: `pulse ${2 + i * 0.4}s infinite alternate`,
+            borderRadius: '2px'
           }}
         />
       ))}
       
-      {/* Floating geometric shapes */}
-      {[...Array(6)].map((_, i) => (
+      {[...Array(8)].map((_, i) => (
         <div
           key={i}
-          className="absolute border border-white/10 rounded-lg"
+          className="absolute border border-indigo-500/20 bg-indigo-500/5"
           style={{
-            width: `${40 + Math.random() * 30}px`,
-            height: `${40 + Math.random() * 30}px`,
+            width: `${30 + Math.random() * 40}px`,
+            height: `${30 + Math.random() * 40}px`,
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            transform: `translate(${mousePosition.x * (4 + i)}px, ${mousePosition.y * (2 + i)}px) rotate(${i * 30}deg)`,
-            animation: `pulse ${3 + i * 0.5}s infinite`,
+            transform: `translate(${mousePosition.x * (6 + i * 2)}px, ${mousePosition.y * (4 + i)}px) rotate(${i * 45}deg)`,
+            animation: `pulse ${3 + i * 0.6}s infinite`,
+            borderRadius: '8px'
           }}
         />
       ))}
     </div>
   );
 
-  // 3D Glass Card Component
-  const GlassCard = ({ children, className = "", hover = true, delay = 0 }: { 
+  // Enhanced Glass Card Component
+  const GlassCard = ({ children, className = "", hover = true, delay = 0, onClick }: { 
     children: React.ReactNode; 
     className?: string; 
     hover?: boolean;
     delay?: number;
+    onClick?: () => void;
   }) => (
     <div 
       className={`
-        relative backdrop-blur-sm bg-white/5 border border-white/10
+        relative backdrop-blur-xl bg-white/10 border border-white/20
         rounded-2xl shadow-2xl
-        ${hover ? 'transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:-translate-y-2 hover:shadow-3xl' : ''}
+        ${hover ? 'transition-all duration-500 hover:bg-white/15 hover:border-white/30 hover:-translate-y-3 hover:shadow-3xl hover:scale-105' : ''}
+        ${onClick ? 'cursor-pointer' : ''}
         ${className}
       `}
       style={{ 
         animationDelay: `${delay}ms`,
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)'
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+        backdropFilter: 'blur(20px) saturate(180%)'
       }}
+      onClick={onClick}
     >
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 pointer-events-none" />
       {children}
     </div>
   );
 
   const renderHomeSection = () => (
     <div className="min-h-screen flex items-center justify-center px-6 relative">
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left side - Text content */}
-          <div className="text-left">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          <div className="text-left space-y-8">
+            <h1 className="text-6xl md:text-7xl font-bold text-white mb-8 leading-tight">
               Hi, I'm{" "}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
                 Rushi Kedhar
               </span>
             </h1>
             
-            <div className="text-2xl md:text-3xl font-semibold text-gray-300 mb-6">
+            <div className="text-3xl md:text-4xl font-bold text-gray-200 mb-8">
               AI/ML Engineer | Software Developer
             </div>
             
-            <p className="text-lg text-gray-400 mb-8 leading-relaxed max-w-xl">
+            <p className="text-xl text-gray-300 mb-10 leading-relaxed max-w-2xl">
               Enthusiastic Computer Science professional with expertise in Artificial Intelligence, 
               Machine Learning, and software development. Published research and delivered impactful 
               projects, including AI-driven solutions for real-world challenges.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row gap-6 mb-10">
               <Button 
                 onClick={() => setActiveSection("projects")}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-5 text-xl font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl hover:scale-105"
               >
-                <Rocket className="w-5 h-5 mr-2" />
+                <Rocket className="w-6 h-6 mr-3" />
                 View Projects
               </Button>
               <Button 
                 onClick={() => setActiveSection("contact")}
-                variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300"
+                className="bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 text-white px-10 py-5 text-xl font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl hover:scale-105"
               >
-                <Mail className="w-5 h-5 mr-2" />
+                <Mail className="w-6 h-6 mr-3" />
                 Contact Me
               </Button>
             </div>
             
             {/* Social links */}
-            <div className="flex gap-4">
-              <a href="mailto:rushikedhar.k@gmail.com" className="text-white/60 hover:text-white transition-colors">
-                <Mail className="w-6 h-6" />
+            <div className="flex gap-6">
+              <a href="mailto:rushikedhar.k@gmail.com" className="text-white/60 hover:text-blue-400 transition-all duration-300 hover:scale-110">
+                <Mail className="w-8 h-8" />
               </a>
-              <a href="tel:+919652543871" className="text-white/60 hover:text-white transition-colors">
-                <Phone className="w-6 h-6" />
+              <a href="tel:+919652543871" className="text-white/60 hover:text-green-400 transition-all duration-300 hover:scale-110">
+                <Phone className="w-8 h-8" />
               </a>
-              <a href="https://linkedin.com/in/rushi-kedhar-329011222/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">
-                <Linkedin className="w-6 h-6" />
+              <a href="https://linkedin.com/in/rushi-kedhar-329011222/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-blue-500 transition-all duration-300 hover:scale-110">
+                <Linkedin className="w-8 h-8" />
               </a>
             </div>
           </div>
           
           {/* Right side - Profile image */}
           <div className="flex justify-center lg:justify-end">
-            <GlassCard className="p-2 w-80 h-80">
-              <div className="w-full h-full rounded-xl overflow-hidden">
-                <img 
-                  src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
-                  alt="Rushi Kedhar Konduru"
-                  className="w-full h-full object-cover object-center scale-110"
-                  style={{ objectPosition: 'center 30%' }}
-                />
-              </div>
-            </GlassCard>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur-lg opacity-75 animate-pulse" />
+              <GlassCard className="p-3 w-96 h-96 relative z-10">
+                <div className="w-full h-full rounded-2xl overflow-hidden border-4 border-white/20">
+                  <img 
+                    src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
+                    alt="Rushi Kedhar Konduru"
+                    className="w-full h-full object-cover object-center scale-125"
+                    style={{ 
+                      objectPosition: 'center 20%',
+                      filter: 'brightness(1.1) contrast(1.1)'
+                    }}
+                  />
+                </div>
+              </GlassCard>
+            </div>
           </div>
         </div>
       </div>
@@ -199,31 +206,33 @@ const Index = () => {
   );
 
   const renderAboutSection = () => (
-    <div className="min-h-screen flex items-center justify-center px-6 relative">
-      <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-16">
-          About Me
+    <div className="min-h-screen flex items-center justify-center px-6 relative py-12">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-12">
+          <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            About Me
+          </span>
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-8">
-          <GlassCard delay={200}>
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-                <User className="w-6 h-6 mr-3 text-blue-400" />
+        <div className="grid md:grid-cols-2 gap-10">
+          <GlassCard delay={200} className="h-fit">
+            <CardContent className="p-10">
+              <h3 className="text-3xl font-bold text-white mb-8 flex items-center">
+                <User className="w-8 h-8 mr-4 text-blue-400" />
                 Background
               </h3>
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div>
-                  <h4 className="text-lg font-semibold text-blue-400 mb-2">Education</h4>
-                  <p className="text-gray-300">
+                  <h4 className="text-2xl font-semibold text-blue-400 mb-4">Education</h4>
+                  <p className="text-xl text-gray-300 leading-relaxed">
                     B.E. in Computer Science<br />
-                    <span className="font-semibold text-white">R.V. Institute of Technology and Management (RVITM), 2025</span>
+                    <span className="font-semibold text-white text-xl">R.V. Institute of Technology and Management (RVITM), 2025</span>
                   </p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-blue-400 mb-2">Experience</h4>
-                  <p className="text-gray-300">
-                    Developer Intern, <span className="font-semibold text-white">Philips</span><br />
+                  <h4 className="text-2xl font-semibold text-blue-400 mb-4">Experience</h4>
+                  <p className="text-xl text-gray-300 leading-relaxed">
+                    Developer Intern, <span className="font-semibold text-white text-xl">Philips</span><br />
                     July 2024 – June 2025
                   </p>
                 </div>
@@ -231,13 +240,13 @@ const Index = () => {
             </CardContent>
           </GlassCard>
           
-          <GlassCard delay={400}>
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-                <Zap className="w-6 h-6 mr-3 text-purple-400" />
+          <GlassCard delay={400} className="h-fit">
+            <CardContent className="p-10">
+              <h3 className="text-3xl font-bold text-white mb-8 flex items-center">
+                <Zap className="w-8 h-8 mr-4 text-purple-400" />
                 Vision
               </h3>
-              <p className="text-gray-300 mb-6 leading-relaxed">
+              <p className="text-xl text-gray-300 mb-8 leading-relaxed">
                 I'm passionate about leveraging cutting-edge AI and ML technologies to solve complex real-world problems. 
                 My research background combined with hands-on development experience allows me to bridge the gap between 
                 theoretical knowledge and practical implementation.
@@ -247,8 +256,8 @@ const Index = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 font-semibold rounded-xl transition-all duration-300 shadow-lg">
-                  <Download className="w-5 h-5 mr-2" />
+                <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 shadow-lg hover:scale-105">
+                  <Download className="w-6 h-6 mr-3" />
                   Download Resume
                 </Button>
               </a>
@@ -260,24 +269,39 @@ const Index = () => {
   );
 
   const renderSkillsSection = () => (
-    <div className="min-h-screen flex items-center justify-center px-6 relative">
-      <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-16">
-          Skills
+    <div className="min-h-screen flex items-center justify-center px-6 relative py-12">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-12">
+          <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            Skills
+          </span>
         </h2>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {Object.entries(skills).map(([category, skillList], index) => (
-            <GlassCard key={category} delay={index * 100}>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-white mb-4 capitalize">
+            <GlassCard 
+              key={category} 
+              delay={index * 150}
+              className="animate-fade-in h-fit"
+              style={{
+                animation: `fade-in 0.8s ease-out ${index * 0.2}s both`
+              }}
+            >
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold text-white mb-6 capitalize">
                   {category === "specialized" ? "AI/ML" : category}
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {skillList.map((skill, skillIndex) => (
-                    <div key={skill} className="group">
-                      <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 transition-all duration-300 hover:bg-white/10 hover:border-white/20">
-                        <span className="text-gray-300 group-hover:text-white font-medium">
+                    <div 
+                      key={skill} 
+                      className="group"
+                      style={{
+                        animation: `fade-in 0.6s ease-out ${(index * 0.2) + (skillIndex * 0.1)}s both`
+                      }}
+                    >
+                      <div className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 transition-all duration-300 hover:bg-white/20 hover:border-white/40 hover:scale-105 hover:shadow-lg cursor-pointer">
+                        <span className="text-gray-300 group-hover:text-white font-semibold text-lg transition-colors duration-300">
                           {skill}
                         </span>
                       </div>
@@ -293,46 +317,48 @@ const Index = () => {
   );
 
   const renderProjectsSection = () => (
-    <div className="min-h-screen flex items-center justify-center px-6 relative">
-      <div className="max-w-6xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-16">
-          Projects
+    <div className="min-h-screen flex items-center justify-center px-6 relative py-12">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <h2 className="text-5xl md:text-6xl font-bold text-white text-center mb-12">
+          <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+            Projects
+          </span>
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-10">
           {projects.map((project, index) => (
-            <GlassCard key={index} delay={index * 200}>
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mr-4">
-                    <Rocket className="w-5 h-5 text-white" />
+            <GlassCard key={index} delay={index * 300} className="h-fit">
+              <CardContent className="p-10">
+                <div className="flex items-center mb-8">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mr-6">
+                    <Rocket className="w-6 h-6 text-white" />
                   </div>
-                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 text-sm font-semibold rounded-full">
+                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 text-lg font-bold rounded-full">
                     {project.role}
                   </div>
                 </div>
                 
-                <h3 className="text-xl font-bold text-white mb-4 leading-tight">
+                <h3 className="text-2xl font-bold text-white mb-6 leading-tight">
                   {project.title}
                 </h3>
                 
-                <p className="text-gray-300 mb-6 leading-relaxed">
+                <p className="text-lg text-gray-300 mb-8 leading-relaxed">
                   {project.description}
                 </p>
                 
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-3 mb-8">
                   {project.technologies.map((tech, techIndex) => (
                     <span 
                       key={techIndex}
-                      className="text-xs font-medium text-gray-300 bg-white/5 border border-white/10 px-2 py-1 rounded-md"
+                      className="text-sm font-semibold text-white bg-white/10 border border-white/20 px-3 py-2 rounded-lg hover:bg-white/20 transition-colors duration-200"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
                 
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 font-semibold rounded-lg transition-all duration-300">
-                  <ExternalLink className="w-4 h-4 mr-2" />
+                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 text-lg font-bold rounded-xl transition-all duration-300 hover:scale-105">
+                  <ExternalLink className="w-5 h-5 mr-3" />
                   View Details
                 </Button>
               </CardContent>
@@ -344,13 +370,15 @@ const Index = () => {
   );
 
   const renderContactSection = () => (
-    <div className="min-h-screen flex items-center justify-center px-6 relative">
-      <div className="max-w-4xl mx-auto text-center relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-16">
-          Contact
+    <div className="min-h-screen flex items-center justify-center px-6 relative py-12">
+      <div className="max-w-6xl mx-auto text-center relative z-10">
+        <h2 className="text-5xl md:text-6xl font-bold text-white mb-12">
+          <span className="bg-gradient-to-r from-pink-400 to-purple-500 bg-clip-text text-transparent">
+            Contact
+          </span>
         </h2>
         
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
           {[
             {
               icon: Mail,
@@ -371,13 +399,13 @@ const Index = () => {
               href: "https://linkedin.com/in/rushi-kedhar-329011222/"
             }
           ].map((contact, index) => (
-            <GlassCard key={contact.title} delay={index * 150}>
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mb-4">
-                  <contact.icon className="w-6 h-6 text-white" />
+            <GlassCard key={contact.title} delay={index * 200} className="h-fit">
+              <CardContent className="p-10 text-center">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mb-6">
+                  <contact.icon className="w-8 h-8 text-white" />
                 </div>
                 
-                <h3 className="font-bold text-lg text-white mb-3">
+                <h3 className="font-bold text-2xl text-white mb-4">
                   {contact.title}
                 </h3>
                 
@@ -385,7 +413,7 @@ const Index = () => {
                   href={contact.href}
                   target={contact.href.startsWith('http') ? "_blank" : undefined}
                   rel={contact.href.startsWith('http') ? "noopener noreferrer" : undefined}
-                  className="text-gray-300 hover:text-white transition-colors font-medium"
+                  className="text-gray-300 hover:text-white transition-colors text-lg font-semibold"
                 >
                   {contact.content}
                 </a>
@@ -394,9 +422,9 @@ const Index = () => {
           ))}
         </div>
         
-        <GlassCard delay={500}>
-          <CardContent className="p-8">
-            <p className="text-lg text-gray-300">
+        <GlassCard delay={600} className="max-w-4xl mx-auto">
+          <CardContent className="p-10">
+            <p className="text-2xl text-gray-300">
               <span>Open to exciting opportunities in </span>
               <span className="font-bold text-white">AI/ML</span>
               <span> and </span>
@@ -419,16 +447,16 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 text-white relative overflow-x-hidden">
       <AnimatedBackground />
       
       {/* Sticky Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/20 border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-6 py-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/30 border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <button 
               onClick={() => setActiveSection("home")}
-              className="text-xl font-bold text-white hover:text-blue-400 transition-colors"
+              className="text-2xl font-bold text-white hover:text-blue-400 transition-colors"
             >
               Rushi Kedhar
             </button>
@@ -439,7 +467,7 @@ const Index = () => {
                 <button
                   key={item.id}
                   onClick={() => setActiveSection(item.id)}
-                  className={`font-medium transition-all duration-300 ${
+                  className={`font-semibold text-lg transition-all duration-300 ${
                     activeSection === item.id 
                       ? "text-white border-b-2 border-blue-400" 
                       : "text-gray-400 hover:text-white"
