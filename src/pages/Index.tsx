@@ -114,7 +114,8 @@ const Index = () => {
               <img 
                 src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
                 alt="Rushi Kedhar Konduru"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center scale-110"
+                style={{ objectPosition: 'center 30%' }}
               />
             </div>
             {/* Futuristic ring effect */}
@@ -145,23 +146,6 @@ const Index = () => {
               </p>
             </CardContent>
           </SciFiCard>
-        </div>
-
-        {/* Call-to-Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-          <Button 
-            onClick={() => setActiveSection("projects")}
-            className="bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg font-bold tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105"
-          >
-            VIEW PROJECTS
-          </Button>
-          <Button 
-            onClick={() => setActiveSection("contact")}
-            variant="outline"
-            className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-4 text-lg font-bold tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105"
-          >
-            CONTACT ME
-          </Button>
         </div>
 
         {/* Scroll Down Indicator */}
@@ -238,10 +222,17 @@ const Index = () => {
                 My research background combined with hands-on development experience allows me to bridge the gap between 
                 theoretical knowledge and practical implementation.
               </p>
-              <Button className="bg-red-500 hover:bg-red-600 text-white px-10 py-6 text-xl font-black tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105">
-                <Download className="w-6 h-6 mr-3" />
-                DOWNLOAD RESUME
-              </Button>
+              <a 
+                href="https://drive.google.com/file/d/1Ga12SDxO6fXKCDKhbcn208NiievE43Co/view?usp=drive_link"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block"
+              >
+                <Button className="bg-red-500 hover:bg-red-600 text-white px-10 py-6 text-xl font-black tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105">
+                  <Download className="w-6 h-6 mr-3" />
+                  DOWNLOAD RESUME
+                </Button>
+              </a>
             </CardContent>
           </SciFiCard>
         </div>
@@ -357,8 +348,8 @@ const Index = () => {
             {
               icon: Phone,
               title: "PHONE",
-              content: "+91-9692943871",
-              href: "tel:+919692943871"
+              content: "+91 9652543871",
+              href: "tel:+919652543871"
             },
             {
               icon: Linkedin,
