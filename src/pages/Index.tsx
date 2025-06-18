@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Mail, Phone, Linkedin, User, Zap, Rocket, FileText, Download, ExternalLink, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -48,69 +49,124 @@ const Index = () => {
     }
   ];
 
-  const SciFiBackground = () => (
+  const FuturisticBackground = () => (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Grid lines */}
-      <div className="absolute inset-0 opacity-5">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-950 to-black animate-pulse" />
+      
+      {/* Grid overlay */}
+      <div className="absolute inset-0 opacity-20">
         <div className="h-full w-full" style={{
           backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px'
+          backgroundSize: '40px 40px'
         }} />
       </div>
       
-      {/* Floating geometric shapes */}
-      {[...Array(6)].map((_, i) => (
+      {/* Floating particles */}
+      {[...Array(8)].map((_, i) => (
         <div
           key={i}
-          className="absolute border border-white/10 rounded-lg"
+          className="absolute rounded-full bg-gradient-to-r from-blue-400 to-cyan-300 opacity-30 blur-sm"
+          style={{
+            width: `${4 + Math.random() * 8}px`,
+            height: `${4 + Math.random() * 8}px`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            transform: `translate(${mousePosition.x * (10 + i * 3)}px, ${mousePosition.y * (5 + i * 2)}px)`,
+            animation: `bounce ${3 + i * 0.5}s infinite alternate`,
+          }}
+        />
+      ))}
+      
+      {/* Floating geometric shapes */}
+      {[...Array(4)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute border border-orange-400/20 rounded-lg rotate-45"
           style={{
             width: `${60 + Math.random() * 40}px`,
             height: `${60 + Math.random() * 40}px`,
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            transform: `translate(${mousePosition.x * (5 + i * 2)}px, ${mousePosition.y * (3 + i)}px) rotate(${i * 45}deg)`,
-            opacity: 0.1,
+            transform: `translate(${mousePosition.x * (8 + i * 2)}px, ${mousePosition.y * (4 + i)}px) rotate(${i * 45 + 45}deg)`,
+            animation: `pulse ${4 + i}s infinite`,
           }}
         />
       ))}
     </div>
   );
 
-  const SciFiCard = ({ children, className = "", onClick, delay = 0 }: { children: React.ReactNode; className?: string; onClick?: () => void; delay?: number }) => (
-    <div 
-      className={`
-        relative group cursor-pointer transition-all duration-500 transform-gpu
-        bg-white border border-gray-200
-        shadow-[0_4px_20px_rgba(0,0,0,0.1)] 
-        hover:shadow-[0_8px_40px_rgba(0,0,0,0.15)]
-        hover:scale-[1.02] hover:-translate-y-1
-        rounded-xl overflow-hidden
-        ${className}
-      `}
-      onClick={onClick}
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      <div className="relative z-10">
-        {children}
+  const FuturisticCard = ({ children, className = "", onClick, delay = 0, glowColor = "blue" }: { 
+    children: React.ReactNode; 
+    className?: string; 
+    onClick?: () => void; 
+    delay?: number;
+    glowColor?: "blue" | "orange" | "cyan";
+  }) => {
+    const glowColors = {
+      blue: "shadow-blue-500/20 hover:shadow-blue-500/40",
+      orange: "shadow-orange-500/20 hover:shadow-orange-500/40",
+      cyan: "shadow-cyan-500/20 hover:shadow-cyan-500/40"
+    };
+
+    return (
+      <div 
+        className={`
+          relative group cursor-pointer transition-all duration-500 transform-gpu
+          bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm
+          border border-slate-700/50 hover:border-blue-400/50
+          shadow-2xl ${glowColors[glowColor]}
+          hover:scale-[1.02] hover:-translate-y-2
+          rounded-2xl overflow-hidden
+          ${className}
+        `}
+        onClick={onClick}
+        style={{ animationDelay: `${delay}ms` }}
+      >
+        <div className="relative z-10">
+          {children}
+        </div>
+        {/* Glow effect */}
+        <div className={`absolute -inset-0.5 bg-gradient-to-r ${
+          glowColor === 'blue' ? 'from-blue-500/30 to-cyan-500/30' :
+          glowColor === 'orange' ? 'from-orange-500/30 to-yellow-500/30' :
+          'from-cyan-500/30 to-blue-500/30'
+        } rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`} />
       </div>
-      {/* Subtle border glow on hover */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500/20 to-pink-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
-    </div>
-  );
+    );
+  };
+
+  const GradientText = ({ children, className = "", variant = "primary" }: { 
+    children: React.ReactNode; 
+    className?: string;
+    variant?: "primary" | "accent" | "secondary";
+  }) => {
+    const variants = {
+      primary: "bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500",
+      accent: "bg-gradient-to-r from-orange-400 via-yellow-300 to-orange-500",
+      secondary: "bg-gradient-to-r from-slate-300 via-white to-slate-400"
+    };
+
+    return (
+      <span className={`${variants[variant]} bg-clip-text text-transparent font-black ${className}`}>
+        {children}
+      </span>
+    );
+  };
 
   const renderHomeSection = () => (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gray-50 px-4">
-      <SciFiBackground />
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
+      <FuturisticBackground />
       
       {/* Hero Content - Compact and Centered */}
       <div className="text-center z-10 max-w-4xl mx-auto">
         {/* Profile Image */}
         <div className="mb-8 relative group">
           <div className="relative w-48 h-48 mx-auto">
-            <div className="w-full h-full rounded-full overflow-hidden border-4 border-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] transform-gpu transition-all duration-700 hover:scale-105 bg-white">
+            <div className="w-full h-full rounded-full overflow-hidden border-4 border-cyan-400/50 shadow-2xl shadow-cyan-500/30 transform-gpu transition-all duration-700 hover:scale-105 hover:shadow-cyan-500/50">
               <img 
                 src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
                 alt="Rushi Kedhar Konduru"
@@ -118,106 +174,107 @@ const Index = () => {
                 style={{ objectPosition: 'center 30%' }}
               />
             </div>
-            {/* Futuristic ring effect */}
-            <div className="absolute inset-0 rounded-full border-2 border-red-500/30 animate-pulse" 
+            {/* Rotating ring effect */}
+            <div className="absolute inset-0 rounded-full border-2 border-blue-400/40 animate-pulse" 
                  style={{ transform: 'scale(1.1)' }} />
+            <div className="absolute inset-0 rounded-full border border-orange-400/20 animate-spin" 
+                 style={{ transform: 'scale(1.2)', animationDuration: '8s' }} />
           </div>
         </div>
 
         {/* Name and Title */}
-        <div className="mb-6">
-          <h1 className="text-5xl md:text-6xl font-black mb-4 text-black leading-tight tracking-tight">
-            RUSHI KEDHAR KONDURU
+        <div className="mb-8">
+          <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight tracking-tight">
+            <GradientText variant="primary">
+              RUSHI KEDHAR KONDURU
+            </GradientText>
           </h1>
-          <div className="inline-block bg-black text-white px-8 py-3 rounded-full font-bold text-lg md:text-xl tracking-wide transform-gpu transition-all duration-300 hover:scale-105 hover:bg-red-500 mb-6">
+          <div className="inline-block bg-gradient-to-r from-orange-500 to-yellow-400 text-black px-8 py-3 rounded-full font-bold text-lg md:text-xl tracking-wide transform-gpu transition-all duration-300 hover:scale-105 hover:shadow-orange-500/50 shadow-lg mb-6">
             AI/ML ENGINEER | SOFTWARE DEVELOPER
           </div>
         </div>
 
         {/* Bio Summary */}
         <div className="mb-8 max-w-3xl mx-auto">
-          <SciFiCard>
+          <FuturisticCard glowColor="cyan">
             <CardContent className="p-8">
-              <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+              <p className="text-lg md:text-xl text-slate-300 leading-relaxed">
                 Enthusiastic Computer Science professional with expertise in{" "}
-                <span className="font-bold text-red-500">Artificial Intelligence</span>,{" "}
-                <span className="font-bold text-red-500">Machine Learning</span>, and software development. 
+                <GradientText variant="accent" className="font-bold">Artificial Intelligence</GradientText>,{" "}
+                <GradientText variant="accent" className="font-bold">Machine Learning</GradientText>, and software development. 
                 Published research and delivered impactful projects, including AI-driven solutions for real-world challenges.
               </p>
             </CardContent>
-          </SciFiCard>
+          </FuturisticCard>
+        </div>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mb-12">
+          <Button 
+            onClick={() => setActiveSection("projects")}
+            className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white px-8 py-4 text-lg font-bold tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105 shadow-blue-500/30 hover:shadow-blue-500/50 shadow-lg"
+          >
+            <Rocket className="w-5 h-5 mr-2" />
+            VIEW PROJECTS
+          </Button>
+          <Button 
+            onClick={() => setActiveSection("contact")}
+            className="bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-orange-600 hover:to-yellow-500 text-black px-8 py-4 text-lg font-bold tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105 shadow-orange-500/30 hover:shadow-orange-500/50 shadow-lg"
+          >
+            <Mail className="w-5 h-5 mr-2" />
+            CONTACT ME
+          </Button>
         </div>
 
         {/* Scroll Down Indicator */}
-        <div className="flex flex-col items-center text-gray-500 animate-bounce">
+        <div className="flex flex-col items-center text-cyan-400 animate-bounce">
           <span className="text-sm font-medium mb-2 tracking-wide">EXPLORE MORE</span>
           <ChevronDown className="w-6 h-6" />
         </div>
-      </div>
-
-      {/* Navigation Cards - Below the fold */}
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl w-full px-4">
-        {navigationCards.map((card, index) => (
-          <SciFiCard 
-            key={card.id}
-            onClick={() => setActiveSection(card.id)}
-            delay={index * 100}
-            className="opacity-75 hover:opacity-100"
-          >
-            <CardContent className="p-6 text-center">
-              <div className="w-12 h-12 mx-auto mb-4 bg-black rounded-full flex items-center justify-center group-hover:bg-red-500 transition-colors duration-300">
-                <card.icon className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-black font-bold text-sm tracking-wide">
-                {card.title.toUpperCase()}
-              </h3>
-            </CardContent>
-          </SciFiCard>
-        ))}
       </div>
     </div>
   );
 
   const renderAboutSection = () => (
-    <div className="min-h-screen flex items-center justify-center px-4 relative bg-gray-50">
-      <SciFiBackground />
+    <div className="min-h-screen flex items-center justify-center px-4 relative">
+      <FuturisticBackground />
       
-      <div className="max-w-8xl mx-auto relative z-10">
-        <h2 className="text-7xl md:text-9xl font-black text-center mb-24 text-black tracking-tight">
-          ABOUT
+      <div className="max-w-7xl mx-auto relative z-10">
+        <h2 className="text-6xl md:text-8xl font-black text-center mb-16 tracking-tight">
+          <GradientText variant="primary">ABOUT</GradientText>
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-16 items-start">
-          <SciFiCard delay={200}>
-            <CardContent className="p-16">
-              <h3 className="text-5xl font-black text-black mb-12 tracking-wide">
-                BACKGROUND
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          <FuturisticCard delay={200} glowColor="blue">
+            <CardContent className="p-12">
+              <h3 className="text-4xl font-black mb-8 tracking-wide">
+                <GradientText variant="accent">BACKGROUND</GradientText>
               </h3>
-              <div className="space-y-12">
+              <div className="space-y-8">
                 <div>
-                  <h4 className="text-3xl font-black text-red-500 mb-6 tracking-wide">EDUCATION</h4>
-                  <p className="text-xl text-gray-800 leading-relaxed">
+                  <h4 className="text-2xl font-black text-cyan-400 mb-4 tracking-wide">EDUCATION</h4>
+                  <p className="text-lg text-slate-300 leading-relaxed">
                     B.E. in Computer Science<br />
-                    <span className="font-bold">R.V. Institute of Technology and Management (RVITM), 2025</span>
+                    <span className="font-bold text-white">R.V. Institute of Technology and Management (RVITM), 2025</span>
                   </p>
                 </div>
                 <div>
-                  <h4 className="text-3xl font-black text-red-500 mb-6 tracking-wide">EXPERIENCE</h4>
-                  <p className="text-xl text-gray-800 leading-relaxed">
-                    Developer Intern, <span className="font-black">Philips</span><br />
+                  <h4 className="text-2xl font-black text-cyan-400 mb-4 tracking-wide">EXPERIENCE</h4>
+                  <p className="text-lg text-slate-300 leading-relaxed">
+                    Developer Intern, <span className="font-black text-white">Philips</span><br />
                     July 2024 – June 2025
                   </p>
                 </div>
               </div>
             </CardContent>
-          </SciFiCard>
+          </FuturisticCard>
           
-          <SciFiCard delay={400}>
-            <CardContent className="p-16">
-              <h3 className="text-5xl font-black text-black mb-12 tracking-wide">
-                VISION
+          <FuturisticCard delay={400} glowColor="orange">
+            <CardContent className="p-12">
+              <h3 className="text-4xl font-black mb-8 tracking-wide">
+                <GradientText variant="accent">VISION</GradientText>
               </h3>
-              <p className="text-xl text-gray-800 leading-relaxed mb-12">
+              <p className="text-lg text-slate-300 leading-relaxed mb-8">
                 I'm passionate about leveraging cutting-edge AI and ML technologies to solve complex real-world problems. 
                 My research background combined with hands-on development experience allows me to bridge the gap between 
                 theoretical knowledge and practical implementation.
@@ -228,39 +285,41 @@ const Index = () => {
                 rel="noopener noreferrer"
                 className="inline-block"
               >
-                <Button className="bg-red-500 hover:bg-red-600 text-white px-10 py-6 text-xl font-black tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105">
-                  <Download className="w-6 h-6 mr-3" />
+                <Button className="bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-orange-600 hover:to-yellow-500 text-black px-8 py-4 text-lg font-black tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105 shadow-orange-500/30 hover:shadow-orange-500/50 shadow-lg">
+                  <Download className="w-5 h-5 mr-2" />
                   DOWNLOAD RESUME
                 </Button>
               </a>
             </CardContent>
-          </SciFiCard>
+          </FuturisticCard>
         </div>
       </div>
     </div>
   );
 
   const renderSkillsSection = () => (
-    <div className="min-h-screen flex items-center justify-center px-4 relative bg-gray-50">
-      <SciFiBackground />
+    <div className="min-h-screen flex items-center justify-center px-4 relative">
+      <FuturisticBackground />
       
-      <div className="max-w-8xl mx-auto relative z-10">
-        <h2 className="text-7xl md:text-9xl font-black text-center mb-24 text-black tracking-tight">
-          SKILLS
+      <div className="max-w-7xl mx-auto relative z-10">
+        <h2 className="text-6xl md:text-8xl font-black text-center mb-16 tracking-tight">
+          <GradientText variant="primary">SKILLS</GradientText>
         </h2>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {Object.entries(skills).map(([category, skillList], index) => (
-            <SciFiCard key={category} delay={index * 100}>
-              <CardContent className="p-12">
-                <h3 className="text-4xl font-black text-black mb-10 capitalize tracking-wide">
-                  {category === "specialized" ? "AI/ML" : category.toUpperCase()}
+            <FuturisticCard key={category} delay={index * 100} glowColor={index % 2 === 0 ? "blue" : "cyan"}>
+              <CardContent className="p-8">
+                <h3 className="text-3xl font-black mb-6 capitalize tracking-wide">
+                  <GradientText variant="accent">
+                    {category === "specialized" ? "AI/ML" : category.toUpperCase()}
+                  </GradientText>
                 </h3>
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {skillList.map((skill, skillIndex) => (
                     <div key={skill} className="group">
-                      <div className="bg-gray-100 border border-gray-200 rounded-lg px-6 py-4 transform-gpu transition-all duration-300 hover:bg-black hover:text-white hover:scale-105 hover:shadow-lg">
-                        <span className="font-bold tracking-wide text-lg">
+                      <div className="bg-gradient-to-r from-slate-700/50 to-slate-800/50 border border-slate-600/50 rounded-lg px-4 py-3 transform-gpu transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-cyan-600/20 hover:border-cyan-400/50 hover:scale-105 hover:shadow-cyan-500/20 shadow-lg">
+                        <span className="font-bold tracking-wide text-slate-200 group-hover:text-white">
                           {skill}
                         </span>
                       </div>
@@ -268,7 +327,7 @@ const Index = () => {
                   ))}
                 </div>
               </CardContent>
-            </SciFiCard>
+            </FuturisticCard>
           ))}
         </div>
       </div>
@@ -276,52 +335,54 @@ const Index = () => {
   );
 
   const renderProjectsSection = () => (
-    <div className="min-h-screen flex items-center justify-center px-4 relative bg-gray-50">
-      <SciFiBackground />
+    <div className="min-h-screen flex items-center justify-center px-4 relative">
+      <FuturisticBackground />
       
-      <div className="max-w-8xl mx-auto relative z-10">
-        <h2 className="text-7xl md:text-9xl font-black text-center mb-24 text-black tracking-tight">
-          PROJECTS
+      <div className="max-w-7xl mx-auto relative z-10">
+        <h2 className="text-6xl md:text-8xl font-black text-center mb-16 tracking-tight">
+          <GradientText variant="primary">PROJECTS</GradientText>
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-16">
+        <div className="grid md:grid-cols-2 gap-12">
           {projects.map((project, index) => (
-            <SciFiCard key={index} delay={index * 200}>
-              <CardContent className="p-16">
-                <div className="flex items-center mb-10">
-                  <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mr-6">
-                    <Rocket className="w-8 h-8 text-white" />
+            <FuturisticCard key={index} delay={index * 200} glowColor={index % 2 === 0 ? "orange" : "blue"}>
+              <CardContent className="p-12">
+                <div className="flex items-center mb-8">
+                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-yellow-400 rounded-full flex items-center justify-center mr-4 shadow-orange-500/30 shadow-lg">
+                    <Rocket className="w-6 h-6 text-black" />
                   </div>
-                  <div className="bg-black text-white px-6 py-3 font-bold text-lg tracking-wide rounded-full">
+                  <div className="bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-4 py-2 font-bold text-sm tracking-wide rounded-full shadow-blue-500/30 shadow-lg">
                     {project.role.toUpperCase()}
                   </div>
                 </div>
                 
-                <h3 className="text-4xl font-black text-black mb-10 leading-tight tracking-wide">
-                  {project.title.toUpperCase()}
+                <h3 className="text-3xl font-black mb-6 leading-tight tracking-wide">
+                  <GradientText variant="secondary">
+                    {project.title.toUpperCase()}
+                  </GradientText>
                 </h3>
                 
-                <p className="text-xl text-gray-800 mb-12 leading-relaxed">
+                <p className="text-lg text-slate-300 mb-8 leading-relaxed">
                   {project.description}
                 </p>
                 
-                <div className="flex flex-wrap gap-4 mb-10">
+                <div className="flex flex-wrap gap-3 mb-8">
                   {project.technologies.map((tech, techIndex) => (
                     <span 
                       key={techIndex}
-                      className="inline-block text-sm font-bold text-black bg-gray-100 border border-gray-300 px-4 py-2 rounded-lg hover:bg-red-500 hover:text-white transition-all duration-300 tracking-wide"
+                      className="inline-block text-sm font-bold text-slate-300 bg-gradient-to-r from-slate-700/50 to-slate-800/50 border border-slate-600/50 px-3 py-2 rounded-lg hover:bg-gradient-to-r hover:from-cyan-600/20 hover:to-blue-600/20 hover:border-cyan-400/50 hover:text-white transition-all duration-300 tracking-wide"
                     >
                       {tech.toUpperCase()}
                     </span>
                   ))}
                 </div>
                 
-                <Button className="bg-black hover:bg-red-500 text-white px-8 py-4 font-black tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105">
-                  <ExternalLink className="w-5 h-5 mr-2" />
+                <Button className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white px-6 py-3 font-black tracking-wide rounded-full transform-gpu transition-all duration-300 hover:scale-105 shadow-blue-500/30 hover:shadow-blue-500/50 shadow-lg">
+                  <ExternalLink className="w-4 h-4 mr-2" />
                   VIEW DETAILS
                 </Button>
               </CardContent>
-            </SciFiCard>
+            </FuturisticCard>
           ))}
         </div>
       </div>
@@ -329,15 +390,15 @@ const Index = () => {
   );
 
   const renderContactSection = () => (
-    <div className="min-h-screen flex items-center justify-center px-4 relative bg-gray-50">
-      <SciFiBackground />
+    <div className="min-h-screen flex items-center justify-center px-4 relative">
+      <FuturisticBackground />
       
-      <div className="max-w-8xl mx-auto text-center relative z-10">
-        <h2 className="text-7xl md:text-9xl font-black mb-24 text-black tracking-tight">
-          CONTACT
+      <div className="max-w-6xl mx-auto text-center relative z-10">
+        <h2 className="text-6xl md:text-8xl font-black mb-16 tracking-tight">
+          <GradientText variant="primary">CONTACT</GradientText>
         </h2>
         
-        <div className="grid md:grid-cols-3 gap-10 mb-20">
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
           {[
             {
               icon: Mail,
@@ -358,38 +419,39 @@ const Index = () => {
               href: "https://linkedin.com/in/rushi-kedhar-329011222/"
             }
           ].map((contact, index) => (
-            <SciFiCard key={contact.title} delay={index * 150}>
-              <CardContent className="p-16 text-center">
-                <div className="w-24 h-24 mx-auto bg-black rounded-full flex items-center justify-center shadow-xl mb-10 group-hover:bg-red-500 transition-colors duration-300">
-                  <contact.icon className="w-12 h-12 text-white" />
+            <FuturisticCard key={contact.title} delay={index * 150} glowColor={index === 1 ? "orange" : "cyan"}>
+              <CardContent className="p-12 text-center">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/30 mb-6 group-hover:from-orange-500 group-hover:to-yellow-400 transition-all duration-300">
+                  <contact.icon className="w-8 h-8 text-white" />
                 </div>
                 
-                <h3 className="text-black font-black text-3xl mb-8 tracking-wide">
-                  {contact.title}
+                <h3 className="font-black text-2xl mb-6 tracking-wide">
+                  <GradientText variant="accent">{contact.title}</GradientText>
                 </h3>
                 
                 <a 
                   href={contact.href}
                   target={contact.href.startsWith('http') ? "_blank" : undefined}
                   rel={contact.href.startsWith('http') ? "noopener noreferrer" : undefined}
-                  className="text-gray-800 hover:text-red-500 transition-all duration-300 text-xl font-bold hover:underline tracking-wide"
+                  className="text-slate-300 hover:text-cyan-400 transition-all duration-300 text-lg font-bold hover:underline tracking-wide"
                 >
                   {contact.content}
                 </a>
               </CardContent>
-            </SciFiCard>
+            </FuturisticCard>
           ))}
         </div>
         
-        <SciFiCard delay={500}>
-          <CardContent className="p-16">
-            <p className="text-3xl text-black leading-relaxed font-medium">
-              Open to exciting opportunities in{" "}
-              <span className="font-black text-red-500">AI/ML</span> and{" "}
-              <span className="font-black text-red-500">Software Development</span>
+        <FuturisticCard delay={500} glowColor="orange">
+          <CardContent className="p-12">
+            <p className="text-2xl leading-relaxed font-medium">
+              <span className="text-slate-300">Open to exciting opportunities in </span>
+              <GradientText variant="accent" className="font-black">AI/ML</GradientText>
+              <span className="text-slate-300"> and </span>
+              <GradientText variant="accent" className="font-black">Software Development</GradientText>
             </p>
           </CardContent>
-        </SciFiCard>
+        </FuturisticCard>
       </div>
     </div>
   );
@@ -405,16 +467,16 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-black relative overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-black text-white relative overflow-x-hidden">
       {/* Navigation Header - Sticky and Always Visible */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-white/95 border-b border-gray-200 shadow-lg">
-        <div className="max-w-8xl mx-auto px-8 py-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-700/50 shadow-2xl">
+        <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
             <button 
               onClick={() => setActiveSection("home")}
-              className="text-2xl font-black text-black hover:text-red-500 transition-all duration-300 tracking-wide"
+              className="text-xl font-black hover:text-cyan-400 transition-all duration-300 tracking-wide"
             >
-              RUSHI KEDHAR
+              <GradientText variant="primary">RUSHI KEDHAR</GradientText>
             </button>
             
             <div className="hidden md:flex space-x-2">
@@ -424,8 +486,8 @@ const Index = () => {
                   onClick={() => setActiveSection(section)}
                   className={`capitalize px-6 py-3 transition-all duration-300 font-bold tracking-wide rounded-full ${
                     activeSection === section 
-                      ? "bg-red-500 text-white" 
-                      : "text-black hover:text-red-500 hover:bg-gray-100"
+                      ? "bg-gradient-to-r from-orange-500 to-yellow-400 text-black shadow-orange-500/30 shadow-lg" 
+                      : "text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50"
                   }`}
                 >
                   {section.toUpperCase()}
@@ -441,7 +503,7 @@ const Index = () => {
         <div 
           className="relative transition-all duration-1000 ease-out"
           style={{ 
-            transform: `translateY(${mousePosition.y * 1}px) translateX(${mousePosition.x * 0.5}px)` 
+            transform: `translateY(${mousePosition.y * 0.5}px) translateX(${mousePosition.x * 0.25}px)` 
           }}
         >
           {renderSection()}
