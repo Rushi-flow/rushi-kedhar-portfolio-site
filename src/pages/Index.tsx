@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Mail, Phone, Linkedin, User, Code, Rocket, FileText, Download, ExternalLink, Menu, X, Github, MapPin, Database, Globe, Brain, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -74,28 +73,32 @@ const Index = () => {
       items: ["Python", "Java", "C"],
       icon: Code,
       color: "from-blue-500 to-blue-600",
-      bgGlow: "bg-blue-500/20"
+      bgGlow: "bg-blue-500/20",
+      accent: "border-blue-500/30"
     },
     {
       title: "Web Technologies",
       items: ["HTML", "XML", "CSS", "PHP", "Kotlin", "Prompt Engineering"],
       icon: Globe,
       color: "from-green-500 to-green-600",
-      bgGlow: "bg-green-500/20"
+      bgGlow: "bg-green-500/20",
+      accent: "border-green-500/30"
     },
     {
       title: "Databases & Tools",
       items: ["MySQL", "IntelliJ", "Jupyter Notebooks", "VS Code", "Microsoft Office", "Kali Linux", "Adobe Premiere Pro"],
       icon: Database,
       color: "from-purple-500 to-purple-600",
-      bgGlow: "bg-purple-500/20"
+      bgGlow: "bg-purple-500/20",
+      accent: "border-purple-500/30"
     },
     {
       title: "AI/ML",
       items: ["NLP", "ML", "AI", "Data Analysis", "Salesforce Lightning", "Apex"],
       icon: Brain,
       color: "from-orange-500 to-orange-600",
-      bgGlow: "bg-orange-500/20"
+      bgGlow: "bg-orange-500/20",
+      accent: "border-orange-500/30"
     }
   ];
 
@@ -409,41 +412,61 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {skills.map((skill, index) => (
               <FloatingCard 
                 key={index} 
                 animationId={`skill-${index}`}
                 delay={100}
                 index={index}
-                className="group hover:scale-105 transition-all duration-300"
+                className="group hover:scale-[1.02] transition-all duration-500"
               >
-                <CardContent className="p-6 text-center relative overflow-hidden">
+                <div className="p-8 relative overflow-hidden">
                   {/* Glow Effect */}
                   <div className={`absolute inset-0 ${skill.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`} />
                   
-                  <div className={`relative w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${skill.color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
-                    <skill.icon className="w-8 h-8 text-white" />
+                  {/* Header with Icon and Title */}
+                  <div className="flex items-center space-x-4 mb-6 relative z-10">
+                    <div className={`w-14 h-14 bg-gradient-to-r ${skill.color} rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
+                      <skill.icon className="w-7 h-7 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                      {skill.title}
+                    </h3>
                   </div>
                   
-                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors relative z-10">
-                    {skill.title}
-                  </h3>
-                  
-                  <div className="space-y-2 relative z-10">
+                  {/* Skills Grid */}
+                  <div className="grid grid-cols-2 gap-3 relative z-10">
                     {skill.items.map((item, itemIndex) => (
                       <div 
                         key={itemIndex}
-                        className="text-gray-400 text-sm bg-[#1a1a1a]/80 border border-[#333333] px-3 py-2 rounded-lg group-hover:bg-[#222222]/80 group-hover:border-[#444444] group-hover:text-gray-300 transition-all duration-200 backdrop-blur-sm hover:scale-105 hover:shadow-md cursor-pointer"
+                        className={`
+                          relative p-3 bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] 
+                          border ${skill.accent} rounded-lg text-center
+                          hover:border-opacity-60 hover:shadow-lg hover:shadow-${skill.color.split('-')[1]}-500/20
+                          hover:-translate-y-1 transition-all duration-300 cursor-pointer
+                          group/item overflow-hidden
+                        `}
                         style={{
-                          animationDelay: `${itemIndex * 50}ms`
+                          animationDelay: `${(index * 200) + (itemIndex * 50)}ms`
                         }}
                       >
-                        {item}
+                        {/* Subtle background glow for individual items */}
+                        <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover/item:opacity-5 transition-opacity duration-300`} />
+                        
+                        <span className="text-sm font-medium text-gray-300 group-hover/item:text-white transition-colors duration-200 relative z-10">
+                          {item}
+                        </span>
+                        
+                        {/* Hover indicator */}
+                        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${skill.color} transform scale-x-0 group-hover/item:scale-x-100 transition-transform duration-300`} />
                       </div>
                     ))}
                   </div>
-                </CardContent>
+                  
+                  {/* Bottom accent line */}
+                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${skill.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 delay-100`} />
+                </div>
               </FloatingCard>
             ))}
           </div>
