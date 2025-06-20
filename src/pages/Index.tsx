@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Mail, Phone, Linkedin, User, Code, Rocket, FileText, Download, ExternalLink, Menu, X, Github, MapPin, Database, Globe, Brain, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -29,9 +30,30 @@ const Index = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const throttledScroll = throttle(handleScroll, 16); // ~60fps
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScroll);
   }, []);
+
+  // Throttle function for performance
+  const throttle = (func: Function, delay: number) => {
+    let timeoutId: NodeJS.Timeout;
+    let lastExecTime = 0;
+    return function (...args: any[]) {
+      const currentTime = Date.now();
+      
+      if (currentTime - lastExecTime > delay) {
+        func(...args);
+        lastExecTime = currentTime;
+      } else {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func(...args);
+          lastExecTime = Date.now();
+        }, delay - (currentTime - lastExecTime));
+      }
+    };
+  };
 
   // Intersection Observer for animations
   useEffect(() => {
@@ -164,7 +186,8 @@ const Index = () => {
         style={{
           animationDelay: `${delay + (index * 150)}ms`,
           boxShadow: '0 10px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-          transform: 'perspective(1000px) rotateX(2deg)'
+          transform: 'perspective(1000px) rotateX(2deg)',
+          willChange: 'transform, opacity'
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl" />
@@ -321,6 +344,7 @@ const Index = () => {
                       objectPosition: 'center 20%',
                       filter: 'brightness(1.1) contrast(1.05)'
                     }}
+                    loading="lazy"
                   />
                 </div>
               </div>
