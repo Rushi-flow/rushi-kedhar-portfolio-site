@@ -264,6 +264,21 @@ const Index = () => {
                 </p>
               </div>
               
+              <div className="flex flex-wrap gap-4">
+                <button 
+                  onClick={() => scrollToSection("work")}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                >
+                  View Projects
+                </button>
+                <button 
+                  onClick={() => scrollToSection("contact")}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                >
+                  Contact
+                </button>
+              </div>
+              
               <div className="flex items-center space-x-6">
                 <a href="mailto:rushikedhar.k@gmail.com" className="text-gray-400 hover:text-blue-400 transition-colors hover:scale-110 transform duration-200">
                   <Mail className="w-7 h-7" />
@@ -285,7 +300,7 @@ const Index = () => {
             <div className="flex justify-center lg:justify-end">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur-3xl opacity-30" />
-                <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-3xl overflow-hidden border-4 border-[#222222] shadow-2xl">
+                <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-3xl overflow-hidden border-4 border-[#333333] shadow-2xl">
                   <img 
                     src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
                     alt="Rushi Kedhar"
