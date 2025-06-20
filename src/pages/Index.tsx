@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Mail, Phone, Linkedin, User, Code, Rocket, FileText, Download, ExternalLink, Menu, X, Github, MapPin } from "lucide-react";
+import { Mail, Phone, Linkedin, User, Code, Rocket, FileText, Download, ExternalLink, Menu, X, Github, MapPin, Database, Globe, Brain, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -70,28 +70,32 @@ const Index = () => {
 
   const skills = [
     {
-      title: "Programming Languages",
-      items: ["Python", "Java", "C", "JavaScript", "TypeScript"],
+      title: "Programming",
+      items: ["Python", "Java", "C"],
       icon: Code,
-      color: "from-blue-500 to-blue-600"
-    },
-    {
-      title: "AI & Machine Learning",
-      items: ["TensorFlow", "PyTorch", "Scikit-learn", "NLP", "Computer Vision"],
-      icon: Rocket,
-      color: "from-purple-500 to-purple-600"
+      color: "from-blue-500 to-blue-600",
+      bgGlow: "bg-blue-500/20"
     },
     {
       title: "Web Technologies",
-      items: ["React", "Node.js", "HTML/CSS", "PHP", "REST APIs"],
-      icon: User,
-      color: "from-green-500 to-green-600"
+      items: ["HTML", "XML", "CSS", "PHP", "Kotlin", "Prompt Engineering"],
+      icon: Globe,
+      color: "from-green-500 to-green-600",
+      bgGlow: "bg-green-500/20"
     },
     {
-      title: "Tools & Platforms",
-      items: ["Git", "Docker", "AWS", "MySQL", "Linux", "VS Code"],
-      icon: FileText,
-      color: "from-orange-500 to-orange-600"
+      title: "Databases & Tools",
+      items: ["MySQL", "IntelliJ", "Jupyter Notebooks", "VS Code", "Microsoft Office", "Kali Linux", "Adobe Premiere Pro"],
+      icon: Database,
+      color: "from-purple-500 to-purple-600",
+      bgGlow: "bg-purple-500/20"
+    },
+    {
+      title: "AI/ML",
+      items: ["NLP", "ML", "AI", "Data Analysis", "Salesforce Lightning", "Apex"],
+      icon: Brain,
+      color: "from-orange-500 to-orange-600",
+      bgGlow: "bg-orange-500/20"
     }
   ];
 
@@ -114,24 +118,26 @@ const Index = () => {
     }
   ];
 
-  // Background Grid Pattern
-  const BackgroundPattern = () => (
-    <div className="fixed inset-0 pointer-events-none z-0">
+  // Animated Grid Background
+  const AnimatedBackground = () => (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       <div className="absolute inset-0 bg-[#0a0a0a]" />
       <div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `
             radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0)
           `,
-          backgroundSize: '24px 24px'
+          backgroundSize: '40px 40px',
+          animation: 'pulse 4s ease-in-out infinite'
         }}
       />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5" />
     </div>
   );
 
-  // Modern Card Component
-  const ModernCard = ({ children, className = "", delay = 0, animationId, index = 0 }: {
+  // 3D Card Component
+  const FloatingCard = ({ children, className = "", delay = 0, animationId, index = 0 }: {
     children: React.ReactNode;
     className?: string;
     delay?: number;
@@ -145,29 +151,32 @@ const Index = () => {
         id={animationId}
         data-animate={animationId ? "true" : undefined}
         className={`
-          relative bg-[#111111] border border-[#222222] rounded-2xl
-          transition-all duration-500 hover:bg-[#151515] hover:border-[#333333]
-          hover:shadow-2xl hover:shadow-black/50 hover:-translate-y-2
+          relative bg-gradient-to-br from-[#111111] to-[#0d0d0d] border border-[#222222] rounded-2xl
+          transition-all duration-500 hover:bg-gradient-to-br hover:from-[#151515] hover:to-[#111111] 
+          hover:border-[#333333] hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-3
+          hover:scale-[1.02] backdrop-blur-sm
           ${isVisible ? 'animate-fade-in opacity-100' : 'opacity-0'}
           ${className}
         `}
         style={{
-          animationDelay: `${delay + (index * 100)}ms`,
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05)'
+          animationDelay: `${delay + (index * 150)}ms`,
+          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05)',
+          transform: 'perspective(1000px) rotateX(2deg)'
         }}
       >
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl" />
         {children}
       </div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white relative">
-      <BackgroundPattern />
+    <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-x-hidden">
+      <AnimatedBackground />
       
-      {/* Modern Navigation */}
+      {/* Modern Sticky Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-[#222222]' : 'bg-transparent'
+        isScrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-[#222222] shadow-lg' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -192,7 +201,7 @@ const Index = () => {
                 >
                   {item.title}
                   {activeSection === item.id && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-500 rounded-full" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
                   )}
                 </button>
               ))}
@@ -200,7 +209,7 @@ const Index = () => {
                 href="https://drive.google.com/file/d/1Ga12SDxO6fXKCDKhbcn208NiievE43Co/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 Resume
               </a>
@@ -231,7 +240,7 @@ const Index = () => {
                 href="https://drive.google.com/file/d/1Ga12SDxO6fXKCDKhbcn208NiievE43Co/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300"
+                className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300"
               >
                 Resume
               </a>
@@ -335,16 +344,16 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-8">
             {projects.map((project, index) => (
-              <ModernCard 
+              <FloatingCard 
                 key={index} 
                 animationId={`project-${index}`}
                 delay={200}
                 index={index}
-                className="group cursor-pointer"
+                className="group cursor-pointer h-full"
               >
-                <CardContent className="p-8">
+                <CardContent className="p-8 h-full flex flex-col">
                   <div className="flex items-center justify-between mb-6">
                     <span className="text-sm font-semibold text-blue-400 bg-blue-400/10 px-3 py-1 rounded-full">
                       {project.type}
@@ -356,7 +365,7 @@ const Index = () => {
                     {project.title}
                   </h3>
                   
-                  <p className="text-gray-400 mb-6 leading-relaxed">
+                  <p className="text-gray-400 mb-6 leading-relaxed flex-grow">
                     {project.description}
                   </p>
                   
@@ -364,25 +373,25 @@ const Index = () => {
                     {project.technologies.map((tech, techIndex) => (
                       <span 
                         key={techIndex}
-                        className="text-sm text-gray-300 bg-[#1a1a1a] border border-[#333333] px-3 py-1 rounded-full"
+                        className="text-sm text-gray-300 bg-[#1a1a1a] border border-[#333333] px-3 py-1 rounded-full hover:bg-[#222222] hover:border-[#444444] transition-all duration-200"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
                   
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-auto">
                     <span className="text-sm font-medium text-gray-500">{project.role}</span>
                     <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
                   </div>
                 </CardContent>
-              </ModernCard>
+              </FloatingCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Skills Section */}
+      {/* Enhanced Skills Section */}
       <section id="skills" className="py-20 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -402,40 +411,46 @@ const Index = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {skills.map((skill, index) => (
-              <ModernCard 
+              <FloatingCard 
                 key={index} 
                 animationId={`skill-${index}`}
                 delay={100}
                 index={index}
                 className="group hover:scale-105 transition-all duration-300"
               >
-                <CardContent className="p-6 text-center">
-                  <div className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${skill.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                <CardContent className="p-6 text-center relative overflow-hidden">
+                  {/* Glow Effect */}
+                  <div className={`absolute inset-0 ${skill.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`} />
+                  
+                  <div className={`relative w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${skill.color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
                     <skill.icon className="w-8 h-8 text-white" />
                   </div>
                   
-                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors relative z-10">
                     {skill.title}
                   </h3>
                   
-                  <div className="space-y-2">
+                  <div className="space-y-2 relative z-10">
                     {skill.items.map((item, itemIndex) => (
                       <div 
                         key={itemIndex}
-                        className="text-gray-400 text-sm bg-[#1a1a1a] border border-[#333333] px-3 py-2 rounded-lg group-hover:bg-[#222222] group-hover:border-[#444444] transition-all duration-200"
+                        className="text-gray-400 text-sm bg-[#1a1a1a]/80 border border-[#333333] px-3 py-2 rounded-lg group-hover:bg-[#222222]/80 group-hover:border-[#444444] group-hover:text-gray-300 transition-all duration-200 backdrop-blur-sm hover:scale-105 hover:shadow-md cursor-pointer"
+                        style={{
+                          animationDelay: `${itemIndex * 50}ms`
+                        }}
                       >
                         {item}
                       </div>
                     ))}
                   </div>
                 </CardContent>
-              </ModernCard>
+              </FloatingCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Enhanced Let's Connect Section */}
       <section id="contact" className="py-20 px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 
@@ -448,9 +463,8 @@ const Index = () => {
             Let's Connect
           </h2>
           
-          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Open to exciting opportunities in AI/ML and Software Development. 
-            Let's build something amazing together!
+          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+            I'm always interested in discussing new opportunities, exciting projects, or collaborations in AI/ML and software development. Feel free to reach out!
           </p>
           
           <div className="grid md:grid-cols-3 gap-6 mb-12">
@@ -460,46 +474,52 @@ const Index = () => {
                 title: "Email",
                 content: "rushikedhar.k@gmail.com",
                 href: "mailto:rushikedhar.k@gmail.com",
-                color: "from-red-500 to-red-600"
+                color: "from-red-500 to-red-600",
+                bgGlow: "bg-red-500/20"
               },
               {
                 icon: Phone,
                 title: "Phone",
                 content: "+91 9652543871",
                 href: "tel:+919652543871",
-                color: "from-green-500 to-green-600"
+                color: "from-green-500 to-green-600",
+                bgGlow: "bg-green-500/20"
               },
               {
                 icon: Linkedin,
                 title: "LinkedIn",
                 content: "Connect with me",
                 href: "https://linkedin.com/in/rushi-kedhar-329011222/",
-                color: "from-blue-500 to-blue-600"
+                color: "from-blue-500 to-blue-600",
+                bgGlow: "bg-blue-500/20"
               }
             ].map((contact, index) => (
-              <ModernCard 
+              <FloatingCard 
                 key={contact.title} 
                 animationId={`contact-${index}`}
                 delay={100}
                 index={index}
-                className="group cursor-pointer"
+                className="group cursor-pointer hover:scale-105"
               >
                 <a href={contact.href} target={contact.href.startsWith('http') ? "_blank" : undefined} rel={contact.href.startsWith('http') ? "noopener noreferrer" : undefined}>
-                  <CardContent className="p-8 text-center">
-                    <div className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${contact.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <CardContent className="p-8 text-center relative overflow-hidden">
+                    {/* Glow Effect */}
+                    <div className={`absolute inset-0 ${contact.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`} />
+                    
+                    <div className={`relative w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${contact.color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300 shadow-lg`}>
                       <contact.icon className="w-8 h-8 text-white" />
                     </div>
                     
-                    <h3 className="font-bold text-xl text-white mb-3 group-hover:text-blue-400 transition-colors">
+                    <h3 className="font-bold text-xl text-white mb-3 group-hover:text-blue-400 transition-colors relative z-10">
                       {contact.title}
                     </h3>
                     
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors relative z-10">
                       {contact.content}
                     </p>
                   </CardContent>
                 </a>
-              </ModernCard>
+              </FloatingCard>
             ))}
           </div>
           
