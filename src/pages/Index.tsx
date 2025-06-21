@@ -107,7 +107,7 @@ const Index = () => {
       accent: "border-green-500/30"
     },
     {
-      title: "Databases & Tools",
+      title: "Tools",
       items: ["MySQL", "IntelliJ", "Jupyter Notebooks", "VS Code", "Microsoft Office", "Kali Linux", "Adobe Premiere Pro"],
       icon: Database,
       color: "from-purple-500 to-purple-600",
@@ -116,7 +116,7 @@ const Index = () => {
     },
     {
       title: "AI/ML",
-      items: ["NLP", "ML", "AI", "Data Analysis", "Salesforce Lightning", "Apex"],
+      items: ["Natural Language Processing (NLP)", "Machine Learning (ML)", "Artificial Intelligence (AI)", "Data Analysis", "Salesforce Lightning", "Apex"],
       icon: Brain,
       color: "from-orange-500 to-orange-600",
       bgGlow: "bg-orange-500/20",
@@ -126,17 +126,17 @@ const Index = () => {
 
   const projects = [
     {
-      title: "AI-Driven Self-Driving Car Enhancement",
-      description: "Developed AI solutions for edge cases in autonomous vehicles using computer vision and ML algorithms. Implemented safety protocols and improved reliability through advanced simulation frameworks.",
-      technologies: ["Python", "Computer Vision", "Machine Learning", "TensorFlow", "OpenCV"],
+      title: "Enhancing the Reliability of Self-Driving Cars",
+      description: "Developed AI-driven solutions for edge cases in autonomous vehicles using Python, simulation frameworks, computer vision, and ML algorithms. Implemented safety protocols and improved reliability through advanced simulation frameworks.",
+      technologies: ["Python", "Computer Vision", "Machine Learning", "Simulation Frameworks"],
       role: "Lead Developer",
       type: "AI/ML Project",
       year: "2024"
     },
     {
-      title: "Neural Network Character Recognition System",
-      description: "Built a NN-Fuzzy Logic Control system achieving 99.8% accuracy in character recognition. Published research in Elsevier Procedia-Computer Science with conference presentation.",
-      technologies: ["Neural Networks", "Fuzzy Logic", "Pattern Recognition", "Python", "Research"],
+      title: "Decision Making and Recognition of String Characters",
+      description: "Created NN-Fuzzy Logic Control for handwritten character recognition achieving 99.8% accuracy. Presented research at an international conference and published findings.",
+      technologies: ["Neural Networks", "Fuzzy Logic", "Pattern Recognition", "Python"],
       role: "Research Lead",
       type: "Research Project",
       year: "2023"
@@ -210,7 +210,7 @@ const Index = () => {
               onClick={() => scrollToSection("home")}
               className="text-2xl font-black text-white hover:text-blue-400 transition-colors"
             >
-              Rushi Kedhar
+              Rushi Kedhar Konduru
             </button>
             
             {/* Desktop Navigation */}
@@ -294,7 +294,7 @@ const Index = () => {
                 </div>
                 
                 <p className="text-xl text-gray-400 leading-relaxed max-w-2xl">
-                  Passionate about leveraging cutting-edge AI and ML technologies to solve complex real-world problems. 
+                  Passionate about leveraging cutting-edge AI and ML technologies to solve real-world problems. 
                   Published researcher with hands-on experience in autonomous systems and neural networks.
                 </p>
               </div>
@@ -338,7 +338,7 @@ const Index = () => {
                 <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-3xl overflow-hidden border-4 border-[#333333] shadow-2xl">
                   <img 
                     src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
-                    alt="Rushi Kedhar"
+                    alt="Rushi Kedhar Konduru"
                     className="w-full h-full object-cover scale-110"
                     style={{ 
                       objectPosition: 'center 20%',
@@ -460,7 +460,7 @@ const Index = () => {
                   </div>
                   
                   {/* Skills Grid */}
-                  <div className="grid grid-cols-2 gap-3 relative z-10">
+                  <div className="grid grid-cols-1 gap-3 relative z-10">
                     {skill.items.map((item, itemIndex) => (
                       <div 
                         key={itemIndex}
@@ -582,7 +582,7 @@ const Index = () => {
       <footer className="py-8 px-6 border-t border-[#222222] relative z-10">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-gray-500">
-            © 2025 Rushi Kedhar. Built with React & Tailwind CSS.
+            © 2025 Rushi Kedhar Konduru. Built with React & Tailwind CSS.
           </p>
         </div>
       </footer>
