@@ -138,7 +138,8 @@ const Index = () => {
       technologies: ["Neural Networks", "Fuzzy Logic", "Pattern Recognition", "Python"],
       role: "Research Lead",
       type: "Research Project",
-      year: "2023"
+      year: "2023",
+      url: "https://ibb.co/bgxGw400"
     }
   ];
 
@@ -408,7 +409,19 @@ const Index = () => {
                   
                   <div className="flex items-center justify-between mt-auto">
                     <span className="text-sm font-medium text-gray-500">{project.role}</span>
-                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                    {project.url ? (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-blue-400 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ExternalLink className="w-5 h-5" />
+                      </a>
+                    ) : (
+                      <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                    )}
                   </div>
                 </CardContent>
               </FloatingCard>
