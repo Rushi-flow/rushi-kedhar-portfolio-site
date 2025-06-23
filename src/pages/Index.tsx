@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Mail, Phone, Linkedin, User, Code, Rocket, FileText, Download, ExternalLink, Menu, X, Github, MapPin, Database, Globe, Brain, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -169,7 +168,7 @@ const Index = () => {
     animationId?: string;
     index?: number;
   }) => {
-    const isVisible = animationId ? visibleElements.has(animationId) : true;
+    // const isVisible = animationId ? visibleElements.has(animationId) : true;
     
     return (
       <div
@@ -180,7 +179,7 @@ const Index = () => {
           transition-all duration-500 hover:bg-gradient-to-br hover:from-[#151515] hover:to-[#111111] 
           hover:border-[#333333] hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-3
           hover:scale-[1.02] backdrop-blur-sm
-          ${isVisible ? 'animate-fade-in opacity-100' : 'opacity-0'}
+          animate-fade-in opacity-100
           ${className}
         `}
         style={{
