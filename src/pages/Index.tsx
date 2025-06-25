@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Mail, Phone, Linkedin, User, Code, Rocket, FileText, Download, ExternalLink, Menu, X, Github, MapPin, Database, Globe, Brain, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,33 +10,8 @@ const Index = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [visibleElements, setVisibleElements] = useState(new Set());
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-      
-      // Update active section based on scroll position
-      const sections = ['home', 'work', 'skills', 'contact'];
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
-    };
-
-    const throttledScroll = throttle(handleScroll, 16); // ~60fps
-    window.addEventListener('scroll', throttledScroll, { passive: true });
-    return () => window.removeEventListener('scroll', throttledScroll);
-  }, []);
-
-  // Throttle function for performance
-  const throttle = (func: Function, delay: number) => {
+  // Optimized throttle function with useCallback
+  const throttle = useCallback((func: Function, delay: number) => {
     let timeoutId: NodeJS.Timeout;
     let lastExecTime = 0;
     return function (...args: any[]) {
@@ -52,43 +28,78 @@ const Index = () => {
         }, delay - (currentTime - lastExecTime));
       }
     };
-  };
+  }, []);
 
-  // Intersection Observer for animations
+  // Memoized scroll handler
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    setIsScrolled(scrollY > 20);
+    
+    // Update active section based on scroll position
+    const sections = ['home', 'work', 'skills', 'contact'];
+    const currentSection = sections.find(section => {
+      const element = document.getElementById(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        return rect.top <= 100 && rect.bottom >= 100;
+      }
+      return false;
+    });
+    
+    if (currentSection && currentSection !== activeSection) {
+      setActiveSection(currentSection);
+    }
+  }, [activeSection]);
+
+  useEffect(() => {
+    const throttledScroll = throttle(handleScroll, 16); // ~60fps
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScroll);
+  }, [throttle, handleScroll]);
+
+  // Optimized Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        const newVisibleElements = new Set(visibleElements);
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleElements(prev => new Set([...prev, entry.target.id]));
+            newVisibleElements.add(entry.target.id);
           }
         });
+        if (newVisibleElements.size !== visibleElements.size) {
+          setVisibleElements(newVisibleElements);
+        }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { 
+        threshold: 0.1, 
+        rootMargin: '0px 0px -50px 0px',
+        // Reduce frequency of callback execution
+      }
     );
 
     const elements = document.querySelectorAll('[data-animate]');
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+  }, []); // Remove visibleElements dependency to prevent re-creation
 
-  const navigationItems = [
+  const navigationItems = useMemo(() => [
     { id: "home", title: "Home" },
     { id: "work", title: "Work" },
     { id: "skills", title: "Skills" },
     { id: "contact", title: "Contact" },
-  ];
+  ], []);
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMobileMenuOpen(false);
-  };
+  }, []);
 
-  const skills = [
+  const skills = useMemo(() => [
     {
       title: "Programming",
       items: ["Python", "Java", "C"],
@@ -121,9 +132,9 @@ const Index = () => {
       bgGlow: "bg-orange-500/20",
       accent: "border-orange-500/30"
     }
-  ];
+  ], []);
 
-  const projects = [
+  const projects = useMemo(() => [
     {
       title: "Enhancing the Reliability of Self-Driving Cars",
       description: "Developed AI-driven solutions for edge cases in autonomous vehicles using Python, simulation frameworks, computer vision, and ML algorithms. Implemented safety protocols and improved reliability through advanced simulation frameworks.",
@@ -141,74 +152,68 @@ const Index = () => {
       year: "2023",
       url: "https://ibb.co/bgxGw400"
     }
-  ];
+  ], []);
 
-  // Animated Grid Background
-  const AnimatedBackground = () => (
+  // Optimized Animated Background with reduced complexity
+  const AnimatedBackground = useCallback(() => (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       <div className="absolute inset-0 bg-[#0a0a0a]" />
       <div 
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: `
-            radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0)
-          `,
-          backgroundSize: '40px 40px',
-          animation: 'pulse 4s ease-in-out infinite'
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
+          backgroundSize: '50px 50px',
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/3 via-transparent to-purple-500/3" />
     </div>
-  );
+  ), []);
 
-  // 3D Card Component
-  const FloatingCard = ({ children, className = "", delay = 0, animationId, index = 0 }: {
+  // Optimized 3D Card Component with reduced animations
+  const FloatingCard = useCallback(({ children, className = "", delay = 0, animationId, index = 0 }: {
     children: React.ReactNode;
     className?: string;
     delay?: number;
     animationId?: string;
     index?: number;
   }) => {
-    // const isVisible = animationId ? visibleElements.has(animationId) : true;
-    
     return (
       <div
         id={animationId}
         data-animate={animationId ? "true" : undefined}
         className={`
           relative bg-gradient-to-br from-[#111111] to-[#0d0d0d] border border-[#222222] rounded-2xl
-          transition-all duration-500 hover:bg-gradient-to-br hover:from-[#151515] hover:to-[#111111] 
-          hover:border-[#333333] hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-3
-          hover:scale-[1.02] backdrop-blur-sm
+          transition-all duration-300 hover:bg-gradient-to-br hover:from-[#151515] hover:to-[#111111] 
+          hover:border-[#333333] hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1
+          hover:scale-[1.01] backdrop-blur-sm
           animate-fade-in opacity-100
           ${className}
         `}
         style={{
-          animationDelay: `${delay + (index * 150)}ms`,
-          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-          transform: 'perspective(1000px) rotateX(2deg)',
+          animationDelay: `${delay + (index * 100)}ms`,
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)',
           willChange: 'transform, opacity'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/3 to-transparent rounded-2xl" />
         {children}
       </div>
     );
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-x-hidden">
       <AnimatedBackground />
       
       {/* Modern Sticky Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         isScrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-[#222222] shadow-lg' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <button 
               onClick={() => scrollToSection("home")}
-              className="text-2xl font-black text-white hover:text-blue-400 transition-colors"
+              className="text-2xl font-black text-white hover:text-blue-400 transition-colors duration-200"
             >
               Rushi Kedhar Konduru
             </button>
@@ -219,7 +224,7 @@ const Index = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`font-medium text-base transition-all duration-300 relative ${
+                  className={`font-medium text-base transition-all duration-200 relative ${
                     activeSection === item.id 
                       ? "text-white" 
                       : "text-gray-400 hover:text-white"
@@ -235,7 +240,7 @@ const Index = () => {
                 href="https://drive.google.com/file/d/1Ga12SDxO6fXKCDKhbcn208NiievE43Co/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
               >
                 Resume
               </a>
@@ -257,7 +262,7 @@ const Index = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left py-3 font-medium text-base text-gray-400 hover:text-white transition-colors"
+                  className="block w-full text-left py-3 font-medium text-base text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   {item.title}
                 </button>
@@ -266,7 +271,7 @@ const Index = () => {
                 href="https://drive.google.com/file/d/1Ga12SDxO6fXKCDKhbcn208NiievE43Co/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300"
+                className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200"
               >
                 Resume
               </a>
@@ -302,26 +307,26 @@ const Index = () => {
               <div className="flex flex-wrap gap-4">
                 <button 
                   onClick={() => scrollToSection("work")}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
                 >
                   View Projects
                 </button>
                 <button 
                   onClick={() => scrollToSection("contact")}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
                 >
                   Contact
                 </button>
               </div>
               
               <div className="flex items-center space-x-6">
-                <a href="mailto:rushikedhar.k@gmail.com" className="text-gray-400 hover:text-blue-400 transition-colors hover:scale-110 transform duration-200">
+                <a href="mailto:rushikedhar.k@gmail.com" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform">
                   <Mail className="w-7 h-7" />
                 </a>
-                <a href="https://linkedin.com/in/rushi-kedhar-329011222/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors hover:scale-110 transform duration-200">
+                <a href="https://linkedin.com/in/rushi-kedhar-329011222/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform">
                   <Linkedin className="w-7 h-7" />
                 </a>
-                <a href="tel:+919652543871" className="text-gray-400 hover:text-green-400 transition-colors hover:scale-110 transform duration-200">
+                <a href="tel:+919652543871" className="text-gray-400 hover:text-green-400 transition-colors duration-200 hover:scale-110 transform">
                   <Phone className="w-7 h-7" />
                 </a>
               </div>
@@ -334,7 +339,7 @@ const Index = () => {
             
             <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur-3xl opacity-30" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur-2xl opacity-20" />
                 <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-3xl overflow-hidden border-4 border-[#333333] shadow-2xl">
                   <img 
                     src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
@@ -360,9 +365,7 @@ const Index = () => {
             <h2 
               id="work-title"
               data-animate="true"
-              className={`text-5xl md:text-6xl font-black text-white mb-6 transition-all duration-1000 ${
-                visibleElements.has('work-title') ? 'animate-fade-in opacity-100' : 'opacity-0'
-              }`}
+              className="text-5xl md:text-6xl font-black text-white mb-6 animate-fade-in"
             >
               My Work
             </h2>
@@ -388,7 +391,7 @@ const Index = () => {
                     <span className="text-sm text-gray-500">{project.year}</span>
                   </div>
                   
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors duration-200">
                     {project.title}
                   </h3>
                   
@@ -414,13 +417,13 @@ const Index = () => {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-blue-400 transition-colors"
+                        className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <ExternalLink className="w-5 h-5" />
                       </a>
                     ) : (
-                      <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                      <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors duration-200" />
                     )}
                   </div>
                 </CardContent>
@@ -437,9 +440,7 @@ const Index = () => {
             <h2 
               id="skills-title"
               data-animate="true"
-              className={`text-5xl md:text-6xl font-black text-white mb-6 transition-all duration-1000 ${
-                visibleElements.has('skills-title') ? 'animate-fade-in opacity-100' : 'opacity-0'
-              }`}
+              className="text-5xl md:text-6xl font-black text-white mb-6 animate-fade-in"
             >
               Skills & Expertise
             </h2>
@@ -455,18 +456,18 @@ const Index = () => {
                 animationId={`skill-${index}`}
                 delay={100}
                 index={index}
-                className="group hover:scale-[1.02] transition-all duration-500"
+                className="group hover:scale-[1.01] transition-all duration-300"
               >
                 <div className="p-8 relative overflow-hidden">
                   {/* Glow Effect */}
-                  <div className={`absolute inset-0 ${skill.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`} />
+                  <div className={`absolute inset-0 ${skill.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl`} />
                   
                   {/* Header with Icon and Title */}
                   <div className="flex items-center space-x-4 mb-6 relative z-10">
-                    <div className={`w-14 h-14 bg-gradient-to-r ${skill.color} rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
+                    <div className={`w-14 h-14 bg-gradient-to-r ${skill.color} rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-2 transition-all duration-200 shadow-lg`}>
                       <skill.icon className="w-7 h-7 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors duration-200">
                       {skill.title}
                     </h3>
                   </div>
@@ -479,29 +480,26 @@ const Index = () => {
                         className={`
                           relative p-3 bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] 
                           border ${skill.accent} rounded-lg text-center
-                          hover:border-opacity-60 hover:shadow-lg hover:shadow-${skill.color.split('-')[1]}-500/20
-                          hover:-translate-y-1 transition-all duration-300 cursor-pointer
+                          hover:border-opacity-60 hover:shadow-lg
+                          hover:-translate-y-1 transition-all duration-200 cursor-pointer
                           group/item overflow-hidden
                         `}
-                        style={{
-                          animationDelay: `${(index * 200) + (itemIndex * 50)}ms`
-                        }}
                       >
                         {/* Subtle background glow for individual items */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover/item:opacity-5 transition-opacity duration-300`} />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover/item:opacity-5 transition-opacity duration-200`} />
                         
                         <span className="text-sm font-medium text-gray-300 group-hover/item:text-white transition-colors duration-200 relative z-10">
                           {item}
                         </span>
                         
                         {/* Hover indicator */}
-                        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${skill.color} transform scale-x-0 group-hover/item:scale-x-100 transition-transform duration-300`} />
+                        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${skill.color} transform scale-x-0 group-hover/item:scale-x-100 transition-transform duration-200`} />
                       </div>
                     ))}
                   </div>
                   
                   {/* Bottom accent line */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${skill.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 delay-100`} />
+                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${skill.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 delay-50`} />
                 </div>
               </FloatingCard>
             ))}
@@ -515,9 +513,7 @@ const Index = () => {
           <h2 
             id="contact-title"
             data-animate="true"
-            className={`text-5xl md:text-6xl font-black text-white mb-8 transition-all duration-1000 ${
-              visibleElements.has('contact-title') ? 'animate-fade-in opacity-100' : 'opacity-0'
-            }`}
+            className="text-5xl md:text-6xl font-black text-white mb-8 animate-fade-in"
           >
             Let's Connect
           </h2>
@@ -563,17 +559,17 @@ const Index = () => {
                 <a href={contact.href} target={contact.href.startsWith('http') ? "_blank" : undefined} rel={contact.href.startsWith('http') ? "noopener noreferrer" : undefined}>
                   <CardContent className="p-8 text-center relative overflow-hidden">
                     {/* Glow Effect */}
-                    <div className={`absolute inset-0 ${contact.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`} />
+                    <div className={`absolute inset-0 ${contact.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl`} />
                     
-                    <div className={`relative w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${contact.color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300 shadow-lg`}>
+                    <div className={`relative w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${contact.color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-200 shadow-lg`}>
                       <contact.icon className="w-8 h-8 text-white" />
                     </div>
                     
-                    <h3 className="font-bold text-xl text-white mb-3 group-hover:text-blue-400 transition-colors relative z-10">
+                    <h3 className="font-bold text-xl text-white mb-3 group-hover:text-blue-400 transition-colors duration-200 relative z-10">
                       {contact.title}
                     </h3>
                     
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors relative z-10">
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-200 relative z-10">
                       {contact.content}
                     </p>
                   </CardContent>
