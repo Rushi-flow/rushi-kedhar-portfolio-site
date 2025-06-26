@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Mail, Phone, Linkedin, User, Code, Rocket, FileText, Download, ExternalLink, Menu, X, Github, MapPin, Database, Globe, Brain, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -237,7 +236,7 @@ const Index = () => {
                 </button>
               ))}
               <a 
-                href="https://drive.google.com/file/d/1Ga12SDxO6fXKCDKhbcn208NiievE43Co/view?usp=drive_link"
+                href="https://rushi-kedhar-resume.tiiny.site"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
@@ -268,7 +267,7 @@ const Index = () => {
                 </button>
               ))}
               <a 
-                href="https://drive.google.com/file/d/1Ga12SDxO6fXKCDKhbcn208NiievE43Co/view?usp=drive_link"
+                href="https://rushi-kedhar-resume.tiiny.site"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200"
@@ -364,70 +363,56 @@ const Index = () => {
           <div className="text-center mb-16">
             <h2 
               id="work-title"
-              data-animate="true"
-              className="text-5xl md:text-6xl font-black text-white mb-6 animate-fade-in"
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
             >
               My Work
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
               A collection of projects showcasing my expertise in AI/ML and software development
             </p>
           </div>
-          
           <div className="grid lg:grid-cols-2 gap-8">
             {projects.map((project, index) => (
-              <FloatingCard 
-                key={index} 
-                animationId={`project-${index}`}
-                delay={200}
-                index={index}
-                className="group cursor-pointer h-full"
-              >
-                <CardContent className="p-8 h-full flex flex-col">
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-sm font-semibold text-blue-400 bg-blue-400/10 px-3 py-1 rounded-full">
+              <Card key={index} className="bg-[#18181b] border border-[#232329] rounded-lg shadow-md">
+                <CardContent className="p-6 flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-blue-400 bg-blue-400/10 px-2 py-0.5 rounded">
                       {project.type}
                     </span>
-                    <span className="text-sm text-gray-500">{project.year}</span>
+                    <span className="text-xs text-gray-500">{project.year}</span>
                   </div>
-                  
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors duration-200">
+                  <h3 className="text-xl font-bold text-white mb-2">
                     {project.title}
                   </h3>
-                  
-                  <p className="text-gray-400 mb-6 leading-relaxed flex-grow">
+                  <p className="text-gray-300 mb-4 text-sm">
                     {project.description}
                   </p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech, techIndex) => (
                       <span 
                         key={techIndex}
-                        className="text-sm text-gray-300 bg-[#1a1a1a] border border-[#333333] px-3 py-1 rounded-full hover:bg-[#222222] hover:border-[#444444] transition-all duration-200"
+                        className="text-xs text-gray-200 bg-[#232329] px-2 py-0.5 rounded"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                  
                   <div className="flex items-center justify-between mt-auto">
-                    <span className="text-sm font-medium text-gray-500">{project.role}</span>
-                    {project.url ? (
+                    <span className="text-xs text-gray-400">{project.role}</span>
+                    {project.url && (
                       <a
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
-                        onClick={(e) => e.stopPropagation()}
+                        className="text-blue-400 underline text-xs ml-2"
+                        onClick={e => e.stopPropagation()}
                       >
-                        <ExternalLink className="w-5 h-5" />
+                        View
                       </a>
-                    ) : (
-                      <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors duration-200" />
                     )}
                   </div>
                 </CardContent>
-              </FloatingCard>
+              </Card>
             ))}
           </div>
         </div>
