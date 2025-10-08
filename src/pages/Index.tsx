@@ -150,7 +150,7 @@ const Index = () => {
       role: "Research Lead",
       type: "Research Project",
       year: "2023",
-      url: "https://ibb.co/bgxGw400"
+      url: "https://drive.google.com/file/d/13bNq2n0Zwn30b7OrmqI2elLl-_D5pa4g/view?usp=drive_link"
     }
   ], []);
 
@@ -237,7 +237,7 @@ const Index = () => {
                 </button>
               ))}
               <a 
-                href="https://vp0zab.staticfast.com"
+                href="https://drive.google.com/file/d/1nUyG1WNW9ysQHUGVjb0K472N616FIWGa/view"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
@@ -268,7 +268,7 @@ const Index = () => {
                 </button>
               ))}
               <a 
-                href="https://vp0zab.staticfast.com"
+                href="https://drive.google.com/file/d/1nUyG1WNW9ysQHUGVjb0K472N616FIWGa/view"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200"
@@ -326,7 +326,7 @@ const Index = () => {
                 <a href="https://linkedin.com/in/rushi-kedhar-329011222/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform">
                   <Linkedin className="w-7 h-7" />
                 </a>
-                <a href="tel:+919652543871" className="text-gray-400 hover:text-green-400 transition-colors duration-200 hover:scale-110 transform">
+                <a href="tel:+13463970500" className="text-gray-400 hover:text-green-400 transition-colors duration-200 hover:scale-110 transform">
                   <Phone className="w-7 h-7" />
                 </a>
               </div>
@@ -521,8 +521,8 @@ const Index = () => {
               {
                 icon: Phone,
                 title: "Phone",
-                content: "+91 9652543871",
-                href: "tel:+919652543871",
+                content: "(346) 397-0500",
+                href: "tel:+13463970500",
                 color: "from-green-500 to-green-600",
                 bgGlow: "bg-green-500/20"
               },
