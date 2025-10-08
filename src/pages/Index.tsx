@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { Mail, Phone, Linkedin, User, Code, Rocket, FileText, Download, ExternalLink, Menu, X, Github, MapPin, Database, Globe, Brain, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import profileImage from "@/assets/profile.jpg";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -236,7 +237,7 @@ const Index = () => {
                 </button>
               ))}
               <a 
-                href="https://rushi-kedhar-resume.tiiny.site"
+                href="https://vp0zab.staticfast.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
@@ -267,7 +268,7 @@ const Index = () => {
                 </button>
               ))}
               <a 
-                href="https://rushi-kedhar-resume.tiiny.site"
+                href="https://vp0zab.staticfast.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200"
@@ -341,7 +342,7 @@ const Index = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur-2xl opacity-20" />
                 <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-3xl overflow-hidden border-4 border-[#333333] shadow-2xl">
                   <img 
-                    src="https://i.postimg.cc/pLmdrVmr/Whats-App-Image-2025-06-17-at-21-27-58.jpg" 
+                    src={profileImage} 
                     alt="Rushi Kedhar Konduru"
                     className="w-full h-full object-cover scale-110"
                     style={{ 
