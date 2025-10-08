@@ -294,12 +294,12 @@ const Index = () => {
                 </h1>
                 
                 <div className="text-2xl md:text-3xl font-bold text-gray-300">
-                  AI/ML Engineer & Software Developer
+                  Master's Student in Computer & Information Science
                 </div>
                 
                 <p className="text-xl text-gray-400 leading-relaxed max-w-2xl">
-                  Passionate about leveraging cutting-edge AI and ML technologies to solve real-world problems. 
-                  Published researcher with hands-on experience in autonomous systems and neural networks.
+                  Graduate student at the University of Houston specializing in AI/ML and software development. 
+                  Published researcher with hands-on experience in autonomous systems, neural networks, and cutting-edge AI technologies.
                 </p>
               </div>
               
@@ -332,7 +332,7 @@ const Index = () => {
               
               <div className="flex items-center space-x-2 text-gray-400">
                 <MapPin className="w-5 h-5" />
-                <span>Bangalore, India</span>
+                <span>Houston, TX</span>
               </div>
             </div>
             
@@ -565,7 +565,7 @@ const Index = () => {
           
           <div className="text-center">
             <p className="text-gray-400 text-lg">
-              Currently based in <span className="text-white font-semibold">Bangalore, India</span>
+              Currently based in <span className="text-white font-semibold">Houston, TX</span>
             </p>
           </div>
         </div>
