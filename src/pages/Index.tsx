@@ -237,7 +237,7 @@ const Index = () => {
                 </button>
               ))}
               <a 
-                href="https://drive.google.com/file/d/1nUyG1WNW9ysQHUGVjb0K472N616FIWGa/view"
+                href="https://drive.google.com/file/d/1aFtQd7irX22fbafKOgYV6iAaaOpZgYGA/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
@@ -268,7 +268,7 @@ const Index = () => {
                 </button>
               ))}
               <a 
-                href="https://drive.google.com/file/d/1nUyG1WNW9ysQHUGVjb0K472N616FIWGa/view"
+                href="https://drive.google.com/file/d/1aFtQd7irX22fbafKOgYV6iAaaOpZgYGA/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-200"
