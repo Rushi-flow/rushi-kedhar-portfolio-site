@@ -323,7 +323,7 @@ const Index = () => {
                 <a href="mailto:rushikedhar.k@gmail.com" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform">
                   <Mail className="w-7 h-7" />
                 </a>
-                <a href="https://linkedin.com/in/rushi-kedhar-329011222/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform">
+                <a href="https://www.linkedin.com/in/rushi-kedhar-konduru-329011222/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform">
                   <Linkedin className="w-7 h-7" />
                 </a>
                 <a href="tel:+13463970500" className="text-gray-400 hover:text-green-400 transition-colors duration-200 hover:scale-110 transform">
@@ -530,7 +530,7 @@ const Index = () => {
                 icon: Linkedin,
                 title: "LinkedIn",
                 content: "Connect with me",
-                href: "https://linkedin.com/in/rushi-kedhar-329011222/",
+                href: "https://www.linkedin.com/in/rushi-kedhar-konduru-329011222/",
                 color: "from-blue-500 to-blue-600",
                 bgGlow: "bg-blue-500/20"
               }
